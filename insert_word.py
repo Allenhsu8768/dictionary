@@ -16,7 +16,7 @@ import re
 # 1.建立pymyql數據庫連接
 db = connect(host='localhost',
              user='root',
-             passwd='a123456',
+             passwd='pplikuaqww789',
              database='dict',
              port=3306,
              charset='utf8')
@@ -51,14 +51,16 @@ for line in f:
     word = l[0] # 'a' 索引split後的[0] 為文本中的單字
     interpret = ' '.join(l[1:]) # 再用索引[1:] 表示 ['indef','art','one'] 全都join到字串中
     # 再利用連接數據的的游標對象進行insert的動作
-    sql = 'insert into words(word,interpret) values(%s,%s)'
+    # 先拼湊sql語句
+    sql = 'insert into words(word,interpet) values(%s,%s)'
+    #利用try 捕捉錯誤的方式
     try:
-        cur.execute(sql,[word,interpret])
-        db.commit()
+        cur.execute(sql,[word,interpret]) #將sql語句和 word、interpret參數傳入
+        db.commit() #執行成功
     except Exception as e:
-        db.rollback()
+        db.rollback() #不成功則rollback
         print('filed',e)
-        close1()
+        close1() #關閉輸據庫連接
         
 f.close()
     
